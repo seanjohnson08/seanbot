@@ -1,0 +1,2 @@
+# noyesbot
+A Discord bot.
