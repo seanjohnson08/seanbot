@@ -6,10 +6,9 @@ const { getMarketstackToken } = require('../util');
  * @param {string[]} positionalArgs - up to 10 stock symbols
  * @returns {string} The current latest price for each stock
  */
-async function stockCommand(positionalArgs) {
+async function stockCommand(symbols) {
   if (positionalArgs.length > 0) {
     const marketstackToken = getMarketstackToken();
-    const symbols = positionalArgs.map((symbolStr) => symbolStr);
     const queryStr = stringify({
       access_key: marketstackToken,
       symbols: symbols.join(','),
