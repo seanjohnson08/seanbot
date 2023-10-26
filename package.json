@@ -1,0 +1,29 @@
+{
+  "name": "noyesbot",
+  "version": "0.0.1",
+  "description": "A Discord bot",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noyesa/noyesbot.git"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "Andrew Noyes (noyesa@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noyesa/noyesbot/issues"
+  },
+  "homepage": "https://github.com/noyesa/noyesbot#readme",
+  "devDependencies": {
+    "prettier": "^3.0.3"
+  },
+  "dependencies": {
+    "discord.js": "^14.13.0"
+  }
+}
