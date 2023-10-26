@@ -7,7 +7,7 @@ const { getMarketstackToken } = require('../util');
  * @returns {string} The current latest price for each stock
  */
 async function stockCommand(symbols) {
-  if (positionalArgs.length > 0) {
+  if (symbols.length > 0) {
     const marketstackToken = getMarketstackToken();
     const queryStr = stringify({
       access_key: marketstackToken,
