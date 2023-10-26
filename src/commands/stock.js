@@ -9,7 +9,7 @@ const { getMarketstackToken } = require('../util');
 async function stockCommand(positionalArgs) {
   if (positionalArgs.length > 0) {
     const marketstackToken = getMarketstackToken();
-    const symbols = positionalArgs.map((symbolStr) => String(symbolStr));
+    const symbols = positionalArgs.map((symbolStr) => symbolStr);
     const queryStr = stringify({
       access_key: marketstackToken,
       symbols: symbols.join(','),
@@ -20,7 +20,6 @@ async function stockCommand(positionalArgs) {
     );
 
     return response.json().then((data) => {
-      console.log(data);
       if (data.data.length > 0) {
         return data.data
           .map((d) => {
@@ -32,11 +31,12 @@ async function stockCommand(positionalArgs) {
           })
           .join('\n');
       } else {
+        return 'Specify at least one stock symbol.';
       }
     });
+  } else {
+    return 'Specify at least one stock symbol.';
   }
-
-  return 'Specify at least one stock symbol.';
 }
 
 module.exports = stockCommand;

@@ -89,7 +89,7 @@ function getMarketstackToken() {
   } else {
     const config = loadConfig(path.join(__dirname, '../config.json'));
     if (config.marketstackToken) {
-      console.log('Using bot token from config.json.');
+      console.log('Using marketstack token from config.json.');
       return config.marketstackToken;
     }
   }
