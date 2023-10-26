@@ -5,7 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prettier": "npx prettier src/ -w --single-quote"
+    "prettier": "npx prettier ./ --write",
+    "precommit": "npx lint-staged",
+    "prepare": "husky install .husky"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,8 @@
   },
   "homepage": "https://github.com/noyesa/noyesbot#readme",
   "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
     "prettier": "^3.0.3"
   },
   "dependencies": {
