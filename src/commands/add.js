@@ -8,7 +8,11 @@ const { syncCommand } = require('../util');
 const addCommand = syncCommand((args) => {
   if (args.length > 0) {
     const numbers = args.map((numStr) => parseInt(numStr, 10));
-    return String(numbers.reduce((total, current) => total + current, 0));
+    const result = numbers.reduce((total, current) => total + current, 0);
+    if (Number.isNaN(result)) {
+      return 'NaNaNaNaNaNaNaNa BATMAN!';
+    }
+    return String(result);
   }
   return 'Gimme some numbers breh.';
 });
