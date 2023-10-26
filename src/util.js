@@ -1,4 +1,5 @@
 const fs = require('node:fs');
+const path = require('node:path');
 
 /**
  * Is the message a command for the provided bot?
@@ -93,5 +94,6 @@ function getMarketstackToken() {
       return config.marketstackToken;
     }
   }
+  console.error('Did not find marketstack config.');
 }
 exports.getMarketstackToken = getMarketstackToken;
