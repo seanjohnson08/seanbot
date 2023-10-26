@@ -1,5 +1,8 @@
 const { Client, Events, GatewayIntentBits } = require('discord.js');
-const { isCommandHandlerDefined, dispatchCommand } = require('./commands');
+const {
+  isCommandHandlerDefined,
+  dispatchCommand,
+} = require('./commands/index');
 const { isBotCommand, parseCommand, getBotToken } = require('./util');
 
 const botToken = getBotToken();
@@ -32,6 +35,7 @@ client.on(Events.MessageCreate, (message) => {
       console.log(
         `Received command "${commandName}" with no handler from user ${message.author.username}`,
       );
+      message.reply('wtf');
     }
   }
 });
