@@ -1,18 +1,21 @@
 const addCommand = require('./add');
-
-const commands = new Map([
-  ['add', addCommand],
-  ['commands', commandsCommand],
-]);
+const asyncCommand = require('./async');
+const { syncCommand } = require('../util');
 
 /**
  * Returns a list of the names of available commands.
  * @returns {string} A list of available commands.
  */
-function commandsCommand() {
+const commandsCommand = syncCommand(() => {
   const commandsString = Array.from(commands.keys());
   return `Available commands: ${commandsString.join(', ')}`;
-}
+});
+
+const commands = new Map([
+  ['add', addCommand],
+  ['commands', commandsCommand],
+  ['async', asyncCommand],
+]);
 
 /**
  * Is there a handler defined for the provided command name?

@@ -23,14 +23,14 @@ client.once(Events.ClientReady, (c) => {
   console.log(`Logged in and listening as ${c.user.tag}`);
 });
 
-client.on(Events.MessageCreate, (message) => {
+client.on(Events.MessageCreate, async (message) => {
   if (isBotCommand(message.content)) {
     const { commandName, args } = parseCommand(message.content);
     if (isCommandHandlerDefined(commandName)) {
       console.log(
         `Handling command "${commandName}" from ${message.author.username}`,
       );
-      message.reply(dispatchCommand(commandName, args));
+      message.reply(await dispatchCommand(commandName, args));
     } else {
       console.log(
         `Received command "${commandName}" with no handler from user ${message.author.username}`,
