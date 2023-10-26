@@ -10,25 +10,30 @@ async function stockCommand(positionalArgs) {
   if (positionalArgs.length > 0) {
     const marketstackToken = getMarketstackToken();
     const symbols = positionalArgs.map((symbolStr) => String(symbolStr));
-    const queryStr = stringify({ access_key : marketstackToken, symbols : symbols.join(',')});
+    const queryStr = stringify({
+      access_key: marketstackToken,
+      symbols: symbols.join(','),
+    });
 
-    const response = await fetch("http://api.marketstack.com/v1/intraday/latest?".concat(queryStr));
+    const response = await fetch(
+      'http://api.marketstack.com/v1/intraday/latest?'.concat(queryStr),
+    );
 
     return response.json().then((data) => {
-
       console.log(data);
-      if (data.data.length > 0 ) {
-        return data.data.map((d) => {
-          if (d.symbol !== undefined) {
-            return `**${d.symbol}**: ${d.last}`;
-          } else {
-            return '';
-          }
-        }).join("\n");
+      if (data.data.length > 0) {
+        return data.data
+          .map((d) => {
+            if (d.symbol !== undefined) {
+              return `**${d.symbol}**: ${d.last}`;
+            } else {
+              return '';
+            }
+          })
+          .join('\n');
       } else {
-
       }
-    })
+    });
   }
 
   return 'Specify at least one stock symbol.';

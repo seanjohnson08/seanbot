@@ -16,7 +16,7 @@ const commands = new Map([
   ['add', addCommand],
   ['commands', commandsCommand],
   ['async', asyncCommand],
-  ['stock', stockCommand]
+  ['stock', stockCommand],
 ]);
 
 /**
