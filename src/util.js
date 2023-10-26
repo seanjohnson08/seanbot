@@ -58,7 +58,7 @@ function getBotToken() {
     const config = loadConfig(path.join(__dirname, '../config.json'));
     if (config.botToken) {
       console.log('Using bot token from config.json.');
-      return botToken;
+      return config.botToken;
     }
   }
 }
@@ -76,3 +76,22 @@ function syncCommand(command) {
   };
 }
 exports.syncCommand = syncCommand;
+
+/*
+ * Grab the marketstack token from the env or config
+ * file in the project root.
+ * @returns {string} The marketstack token.
+ */
+function getMarketstackToken() {
+  if (process.env.MARKETSTACK_TOKEN) {
+    console.log('Using token from MARKETSTACK_TOKEN env variable.');
+    return process.env.MARKETSTACK_TOKEN;
+  } else {
+    const config = loadConfig(path.join(__dirname, '../config.json'));
+    if (config.marketstackToken) {
+      console.log('Using marketstack token from config.json.');
+      return config.marketstackToken;
+    }
+  }
+}
+exports.getMarketstackToken = getMarketstackToken;
