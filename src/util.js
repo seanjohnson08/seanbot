@@ -63,3 +63,16 @@ function getBotToken() {
   }
 }
 exports.getBotToken = getBotToken;
+
+/**
+ * Wraps a command that doesn't behave asynchronously in a promise so it can be
+ * consumed by the dispatcher.
+ * @param {function(string[])} command - The synchronous command function.
+ * @returns {function(string[]): Promise<string>} A function that returns a promise with the command's result.
+ */
+function syncCommand(command) {
+  return (...args) => {
+    return Promise.resolve(command(...args));
+  };
+}
+exports.syncCommand = syncCommand;
