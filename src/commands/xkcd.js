@@ -7,13 +7,10 @@ async function xkcdCommand([comicId]) {
   const maxId = 2846; // hard-coding this for now, we can probably just keep increasing this if needed, no sense adding more complicated logic to get the true max
 
   if (!comicId) {
-    comicId = 'random';
+    comicId = Math.floor(Math.random() * maxId);
   }
 
-  if (comicId == 'random') {
-    comicId = Math.floor(Math.random() * maxId);
-    urlStr = `https://xkcd.com/${comicId}/info.0.json`;
-  } else if (comicId == 'latest') {
+  if (comicId == 'latest') {
     urlStr = `https://xkcd.com/info.0.json`;
   } else {
     urlStr = `https://xkcd.com/${comicId}/info.0.json`;
