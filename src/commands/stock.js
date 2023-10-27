@@ -14,6 +14,10 @@ async function stockCommand(symbols) {
     return 'Sorry, having issues fetching stock prices right now.';
   }
 
+  if (!symbols || symbols.length === 0) {
+    symbols = ['msft'];
+  }
+
   if (symbols.length > 0) {
     const marketstackToken = getMarketstackToken();
     const queryStr = stringify({
