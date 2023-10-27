@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const { env } = require('node:process');
 
 /**
  * Is the message a command for the provided bot?
@@ -36,32 +37,12 @@ function parseCommand(messageContent) {
 exports.parseCommand = parseCommand;
 
 /**
- * Loads a configuration file.
- * @param {string} configFilePath - Path to the configuration file.
- * @returns {object} Parsed object from configuration file.
- */
-function loadConfig(configFilePath) {
-  const configFileContents = fs.readFileSync(configFilePath);
-  return JSON.parse(configFileContents);
-}
-exports.loadConfig = loadConfig;
-
-/**
  * Attempts to find the bot token either from environment variable or in config
  * file in the project root.
  * @returns {string} The bot token.
  */
 function getBotToken() {
-  if (process.env.BOT_TOKEN) {
-    console.log('Using bot token from BOT_TOKEN env variable.');
-    return process.env.BOT_TOKEN;
-  } else {
-    const config = loadConfig(path.join(__dirname, '../config.json'));
-    if (config.botToken) {
-      console.log('Using bot token from config.json.');
-      return config.botToken;
-    }
-  }
+  return env.BOT_TOKEN;
 }
 exports.getBotToken = getBotToken;
 
@@ -84,16 +65,6 @@ exports.syncCommand = syncCommand;
  * @returns {string} The marketstack token.
  */
 function getMarketstackToken() {
-  if (process.env.MARKETSTACK_TOKEN) {
-    console.log('Using token from MARKETSTACK_TOKEN env variable.');
-    return process.env.MARKETSTACK_TOKEN;
-  } else {
-    const config = loadConfig(path.join(__dirname, '../config.json'));
-    if (config.marketstackToken) {
-      console.log('Using marketstack token from config.json.');
-      return config.marketstackToken;
-    }
-  }
-  console.error('Did not find marketstack config.');
+  return env.MARKETSTACK_TOKEN;
 }
 exports.getMarketstackToken = getMarketstackToken;

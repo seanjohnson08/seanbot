@@ -7,6 +7,13 @@ const { getMarketstackToken } = require('../util');
  * @returns {string} The current latest price for each stock
  */
 async function stockCommand(symbols) {
+  const marketstackToken = getMarketstackToken();
+
+  if (!marketstackToken) {
+    console.error('marketstack API token not provided.');
+    return 'Sorry, having issues fetching stock prices right now.';
+  }
+
   if (symbols.length > 0) {
     const marketstackToken = getMarketstackToken();
     const queryStr = stringify({
