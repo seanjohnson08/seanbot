@@ -4,6 +4,7 @@ const {
   dispatchCommand,
 } = require('./commands/index');
 const { isBotCommand, parseCommand, getBotToken } = require('./util');
+const { createHeartbeatServer } = require('./hearbeat');
 
 const botToken = getBotToken();
 if (!botToken) {
@@ -41,3 +42,4 @@ client.on(Events.MessageCreate, async (message) => {
 });
 
 client.login(botToken);
+createHeartbeatServer();
