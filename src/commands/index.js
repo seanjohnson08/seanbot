@@ -9,8 +9,12 @@ const { syncCommand } = require('../util');
  * @returns {string} A list of available commands.
  */
 const commandsCommand = syncCommand(() => {
-  const commandsString = Array.from(commands.keys());
-  return `Available commands: ${commandsString.join(', ')}`;
+  const commandEntries = Array.from(commands.entries());
+  const commandsString = commandEntries
+    .filter(([, cmd]) => !cmd.isHidden)
+    .map(([key]) => key)
+    .join(', ');
+  return `Available commands: ${commandsString}`;
 });
 
 const commands = new Map([
