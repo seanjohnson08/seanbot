@@ -1,6 +1,6 @@
 /**
  * Grab XKCD comic + alt text
- * @param {string[]} XKCD ID - uses only the first one, ignores the rest
+ * @param {string[]} XKCD comicId - The ID of the xkcd comic to render
  * @returns {string} XKCD comic image embed + title + alt text
  */
 async function xkcdCommand([comicId]) {
