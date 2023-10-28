@@ -5,4 +5,5 @@ function asyncCommand() {
     }, 2000);
   });
 }
+asyncCommand.isHidden = true;
 module.exports = asyncCommand;
