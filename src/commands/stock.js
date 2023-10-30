@@ -29,21 +29,21 @@ async function stockCommand(symbols) {
       'http://api.marketstack.com/v1/intraday/latest?'.concat(queryStr),
     );
 
-    return response.json().then((data) => {
-      if (data.data.length > 0) {
-        return data.data
-          .map((d) => {
-            if (d.symbol !== undefined) {
-              return `**${d.symbol}**: ${d.last}`;
-            } else {
-              return 'N/A';
-            }
-          })
-          .join('\n');
-      } else {
-        return `There was an issue trying to retrieve data for ${symbols}`;
-      }
-    });
+    const data = await response.json();
+
+    if (data.data.length > 0) {
+      return data.data
+        .map((d) => {
+          if (d.symbol !== undefined) {
+            return `**${d.symbol}**: ${d.last}`;
+          } else {
+            return 'N/A';
+          }
+        })
+        .join('\n');
+    } else {
+      return `There was an issue trying to retrieve data for ${symbols}`;
+    }
   } else {
     return 'Specify at least one stock symbol.';
   }

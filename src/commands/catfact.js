@@ -4,13 +4,12 @@
  */
 async function catfactCommand() {
   const response = await fetch('https://catfact.ninja/fact');
+  const data = await response.json();
 
-  return response.json().then((data) => {
-    if (data.fact !== undefined) {
-      return data.fact;
-    } else {
-      return 'Error retrieving catfact from API.';
-    }
-  });
+  if (data.fact !== undefined) {
+    return data.fact;
+  } else {
+    return 'Error retrieving catfact from API.';
+  }
 }
 module.exports = catfactCommand;
