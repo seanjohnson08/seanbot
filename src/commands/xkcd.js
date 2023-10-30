@@ -17,13 +17,12 @@ async function xkcdCommand([comicId]) {
   }
 
   const response = await fetch(urlStr);
+  const data = await response.json();
 
-  return response.json().then((data) => {
-    if (data.length < 1) {
-      return `XKCD comic #${comicId} does not exist.`;
-    }
+  if (data.length < 1) {
+    return `XKCD comic #${comicId} does not exist.`;
+  }
 
-    return `**XKCD #${data.num}: ${data.title}**\n*${data.alt}*\n${data.img}`;
-  });
+  return `**XKCD #${data.num}: ${data.title}**\n*${data.alt}*\n${data.img}`;
 }
 module.exports = xkcdCommand;
