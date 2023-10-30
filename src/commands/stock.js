@@ -36,12 +36,12 @@ async function stockCommand(symbols) {
             if (d.symbol !== undefined) {
               return `**${d.symbol}**: ${d.last}`;
             } else {
-              return '';
+              return 'N/A';
             }
           })
           .join('\n');
       } else {
-        return 'Specify at least one stock symbol.';
+        return `There was an issue trying to retrieve data for ${symbols}`;
       }
     });
   } else {
