@@ -2,6 +2,7 @@ const addCommand = require('./add');
 const stockCommand = require('./stock');
 const xkcdCommand = require('./xkcd');
 const catfactCommand = require('./catfact');
+const dogfactCommand = require('./dogfact');
 const asyncCommand = require('./async');
 const { syncCommand } = require('../util');
 
@@ -25,6 +26,7 @@ const commands = new Map([
   ['stock', stockCommand],
   ['xkcd', xkcdCommand],
   ['catfact', catfactCommand],
+  ['dogfact', dogfactCommand],
 ]);
 
 /**
