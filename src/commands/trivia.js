@@ -35,11 +35,11 @@ async function triviaCommand() {
   const answerButtons = fisherYatesShuffle([
     triviaQuestion.correct_answer,
     ...triviaQuestion.incorrect_answers,
-  ]).map((answer) => {
+  ]).map((answer, i) => {
     return new ButtonBuilder()
       .setLabel(answer)
       .setCustomId(
-        answer === triviaQuestion.correct_answer ? 'correct' : 'incorrect',
+        answer === triviaQuestion.correct_answer ? 'correct' : `incorrect-${i}`,
       )
       .setStyle(ButtonStyle.Primary);
   });
@@ -60,7 +60,6 @@ async function triviaInteractions(interaction) {
   switch (interaction.customId) {
     case 'correct':
       await interaction.update('Correct!');
-    case 'incorrect':
     default:
       await interaction.update('Wrong answer!');
   }
