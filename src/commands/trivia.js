@@ -5,7 +5,7 @@ const {
   ButtonInteraction,
 } = require('discord.js');
 
-function fischerYatesShuffle(array) {
+function fisherYatesShuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     const temp = array[i];
@@ -29,7 +29,7 @@ async function triviaCommand() {
     }} */
   const triviaQuestion = await triviaResponse.json();
 
-  const answerButtons = fischerYatesShuffle([
+  const answerButtons = fisherYatesShuffle([
     triviaQuestion.correct_answer,
     ...triviaQuestion.incorrect_answers,
   ]).map((answer) => {
