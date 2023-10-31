@@ -4,7 +4,9 @@ const xkcdCommand = require('./xkcd');
 const catfactCommand = require('./catfact');
 const dogfactCommand = require('./dogfact');
 const asyncCommand = require('./async');
+const { triviaCommand, triviaInteractions } = require('./trivia');
 const { syncCommand } = require('../util');
+const { Message } = require('discord.js');
 
 /**
  * Returns a list of the names of available commands.
@@ -27,7 +29,10 @@ const commands = new Map([
   ['xkcd', xkcdCommand],
   ['catfact', catfactCommand],
   ['dogfact', dogfactCommand],
+  ['trivia', triviaCommand],
 ]);
+
+const interactiveCommands = new Map([['trivia', triviaInteractions]]);
 
 /**
  * Is there a handler defined for the provided command name?
@@ -42,12 +47,26 @@ exports.isCommandHandlerDefined = isCommandHandlerDefined;
 /**
  * Dispatches arguments to command handler by name. Handlers are called with an
  * array of positional string arguments entered by the user.
+ * @param {Message<boolean>} message
  * @param {string} commandName - Name of the command to invoke.
  * @param {string[]} args - Positional arguments provided by the user.
- * @returns {string} The command output.
  */
-function dispatchCommand(commandName, args) {
+async function dispatchCommand(message, commandName, args) {
   const command = commands.get(commandName);
-  return command(args);
+  const response = await message.reply(await command(args));
+  if (interactiveCommands.has(commandName)) {
+    const interaction = await response.awaitMessageComponent({
+      time: 60_000,
+    });
+
+    try {
+      await interactiveCommands.get(commandName)(interaction);
+    } catch (e) {
+      console.log('Error', e);
+      await interaction.editReply(
+        'Took longer than a minute to reply, cancelling.',
+      );
+    }
+  }
 }
 exports.dispatchCommand = dispatchCommand;

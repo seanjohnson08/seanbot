@@ -35,7 +35,7 @@ function createDiscordBot() {
         console.log(
           `Handling command "${commandName}" from ${message.author.username}`,
         );
-        message.reply(await dispatchCommand(commandName, args));
+        await dispatchCommand(message, commandName, args);
       } else {
         console.log(
           `Received command "${commandName}" with no handler from user ${message.author.username}`,
