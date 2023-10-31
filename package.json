@@ -30,6 +30,7 @@
     "prettier": "^3.0.3"
   },
   "dependencies": {
+    "@dice-roller/rpg-dice-roller": "^5.4.1",
     "discord.js": "^14.13.0"
   },
   "engines": {

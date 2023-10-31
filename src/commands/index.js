@@ -5,6 +5,7 @@ const catfactCommand = require('./catfact');
 const dogfactCommand = require('./dogfact');
 const asyncCommand = require('./async');
 const { triviaCommand, triviaInteractions } = require('./trivia');
+const dndCommand = require('./dnd');
 const { syncCommand } = require('../util');
 const { Message } = require('discord.js');
 
@@ -30,6 +31,7 @@ const commands = new Map([
   ['catfact', catfactCommand],
   ['dogfact', dogfactCommand],
   ['trivia', triviaCommand],
+  ['dnd', dndCommand],
 ]);
 
 const interactiveCommands = new Map([['trivia', triviaInteractions]]);
