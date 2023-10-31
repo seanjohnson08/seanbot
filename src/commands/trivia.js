@@ -38,10 +38,9 @@ async function triviaCommand() {
     triviaQuestion.correct_answer,
     ...triviaQuestion.incorrect_answers,
   ])
-    .map(decodeURIComponent)
     .map((answer, i) => {
       return new ButtonBuilder()
-        .setLabel(answer)
+        .setLabel(decodeURIComponent(answer))
         .setCustomId(
           answer === triviaQuestion.correct_answer
             ? 'correct'
