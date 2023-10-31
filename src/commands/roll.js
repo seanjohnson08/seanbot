@@ -9,11 +9,10 @@ async function roll(diceRolls) {
   return diceRolls
     .map((dr) => {
       try {
-        console.log(dr);
         const roll = new DiceRoll(String(dr));
         return roll.output;
       } catch (e) {
-        console.log(e);
+        console.error(e);
         return `**${dr}** is an invalid notation`;
       }
     })
