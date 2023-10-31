@@ -39,7 +39,9 @@ async function triviaCommand() {
     return new ButtonBuilder()
       .setLabel(answer)
       .setCustomId(
-        answer === triviaQuestion.correct_answer ? 'correct' : `incorrect-${i}`,
+        answer === triviaQuestion.correct_answer
+          ? 'correct'
+          : `incorrect-${triviaQuestion.correct_answer}`,
       )
       .setStyle(ButtonStyle.Primary);
   });
@@ -59,9 +61,17 @@ async function triviaCommand() {
 async function triviaInteractions(interaction) {
   switch (interaction.customId) {
     case 'correct':
-      await interaction.update('Correct!');
+      await interaction.update({
+        content: 'Correct!',
+        components: [],
+      });
     default:
-      await interaction.update('Wrong answer!');
+      await interaction.update({
+        content: `Wrong answer! Correct answer: ${
+          interaction.customId.split('-')[1]
+        }`,
+        components: [],
+      });
   }
 }
 
