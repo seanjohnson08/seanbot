@@ -41,7 +41,7 @@ async function triviaCommand() {
       .setCustomId(
         answer === triviaQuestion.correct_answer
           ? 'correct'
-          : `incorrect|${triviaQuestion.correct_answer}`,
+          : `incorrect-${i}|${triviaQuestion.correct_answer}`,
       )
       .setStyle(ButtonStyle.Primary);
   });
