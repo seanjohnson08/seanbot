@@ -5,7 +5,7 @@ const { DiceRoll } = require('@dice-roller/rpg-dice-roller');
  * @param {string[]} multiple dice roll requests
  * @returns {string} List of all roll results
  */
-async function dnd(diceRolls) {
+async function roll(diceRolls) {
   return diceRolls
     .map((dr) => {
       try {
@@ -19,4 +19,4 @@ async function dnd(diceRolls) {
     })
     .join('\n');
 }
-module.exports = dnd;
+module.exports = roll;
