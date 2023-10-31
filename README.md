@@ -21,10 +21,10 @@ npm install
 
 ## Running the bot
 
-To run the bot, simply run the index.js file using node:
+To run the bot, use the npm start command:
 
 ```
-node src/index.js
+npm start
 ```
 
 If everything is working successfully, you should see a message that the bot is
