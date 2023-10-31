@@ -63,7 +63,6 @@ async function triviaCommand() {
 
 /** @param {ButtonInteraction} interaction */
 async function triviaInteractions(interaction) {
-  console.log('Handling interaction', interaction);
   switch (interaction.customId) {
     case 'correct':
       await interaction.update({
