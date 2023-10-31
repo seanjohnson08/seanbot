@@ -1,7 +1,7 @@
 const {
   ActionRowBuilder,
   ButtonBuilder,
-  ActionRow,
+  ButtonStyle,
   ButtonInteraction,
 } = require('discord.js');
 
@@ -40,7 +40,8 @@ async function triviaCommand() {
       .setLabel(answer)
       .setCustomId(
         answer === triviaQuestion.correct_answer ? 'correct' : 'incorrect',
-      );
+      )
+      .setStyle(ButtonStyle.Primary);
   });
 
   const row = new ActionRowBuilder().addComponents(...answerButtons);
