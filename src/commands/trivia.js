@@ -41,7 +41,7 @@ async function triviaCommand() {
       .setCustomId(
         answer === triviaQuestion.correct_answer
           ? 'correct'
-          : `incorrect-${triviaQuestion.correct_answer}`,
+          : `incorrect|${triviaQuestion.correct_answer}`,
       )
       .setStyle(ButtonStyle.Primary);
   });
@@ -68,7 +68,7 @@ async function triviaInteractions(interaction) {
     default:
       await interaction.update({
         content: `Wrong answer! Correct answer: ${
-          interaction.customId.split('-')[1]
+          interaction.customId.split('|')[1]
         }`,
         components: [],
       });
