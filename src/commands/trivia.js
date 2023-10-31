@@ -17,7 +17,9 @@ function fisherYatesShuffle(array) {
 
 /** @returns {import('discord.js').MessageReplyOptions} */
 async function triviaCommand() {
-  const triviaResponse = await fetch('https://opentdb.com/api.php?amount=1');
+  const triviaResponse = await fetch(
+    'https://opentdb.com/api.php?amount=1&encode=url3986',
+  );
 
   /** @type {{
         response_code: number
@@ -35,22 +37,24 @@ async function triviaCommand() {
   const answerButtons = fisherYatesShuffle([
     triviaQuestion.correct_answer,
     ...triviaQuestion.incorrect_answers,
-  ]).map((answer, i) => {
-    return new ButtonBuilder()
-      .setLabel(answer)
-      .setCustomId(
-        answer === triviaQuestion.correct_answer
-          ? 'correct'
-          : `incorrect-${i}|${triviaQuestion.correct_answer}`,
-      )
-      .setStyle(ButtonStyle.Primary);
-  });
+  ])
+    .map(decodeURIComponent)
+    .map((answer, i) => {
+      return new ButtonBuilder()
+        .setLabel(answer)
+        .setCustomId(
+          answer === triviaQuestion.correct_answer
+            ? 'correct'
+            : `incorrect-${i}|${triviaQuestion.correct_answer}`,
+        )
+        .setStyle(ButtonStyle.Primary);
+    });
 
   const row = new ActionRowBuilder().addComponents(...answerButtons);
 
   /** @type {import('discord.js').MessageReplyOptions} */
   const reply = {
-    content: triviaQuestion.question,
+    content: decodeURIComponent(triviaQuestion.question),
     components: [row],
   };
 
@@ -59,19 +63,22 @@ async function triviaCommand() {
 
 /** @param {ButtonInteraction} interaction */
 async function triviaInteractions(interaction) {
+  console.log('Handling interaction', interaction);
   switch (interaction.customId) {
     case 'correct':
       await interaction.update({
         content: 'Correct!',
         components: [],
       });
+      break;
     default:
       await interaction.update({
-        content: `Wrong answer! Correct answer: ${
-          interaction.customId.split('|')[1]
-        }`,
+        content: `Wrong answer! Correct answer: ${decodeURIComponent(
+          interaction.customId.split('|')[1],
+        )}`,
         components: [],
       });
+      break;
   }
 }
 

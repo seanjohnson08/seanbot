@@ -55,11 +55,14 @@ async function dispatchCommand(message, commandName, args) {
   const command = commands.get(commandName);
   const response = await message.reply(await command(args));
   if (interactiveCommands.has(commandName)) {
-    const interaction = await response.awaitMessageComponent({ time: 60_000 });
+    const interaction = await response.awaitMessageComponent({
+      time: 60_000,
+    });
 
     try {
-      interactiveCommands.get(commandName)(interaction);
+      await interactiveCommands.get(commandName)(interaction);
     } catch (e) {
+      console.log('Error', e);
       await interaction.editReply(
         'Took longer than a minute to reply, cancelling.',
       );
