@@ -21,13 +21,16 @@ async function triviaCommand() {
 
   /** @type {{
         response_code: number
-        category: string
-        difficulty: string
-        question: string
-        correct_answer: string
-        incorrect_answers: string[]
+        results: [{
+          category: string
+          difficulty: string
+          question: string
+          correct_answer: string
+          incorrect_answers: string[]
+        }]
     }} */
-  const triviaQuestion = await triviaResponse.json();
+  const triviaAPIResponse = await triviaResponse.json();
+  const triviaQuestion = triviaAPIResponse.results[0];
 
   const answerButtons = fisherYatesShuffle([
     triviaQuestion.correct_answer,
