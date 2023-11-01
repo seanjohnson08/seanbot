@@ -1,10 +1,10 @@
-# noyesbot
+# seanbot
 
 A Discord bot.
 
 ## Configuration
 
-Secrets are passed into the program through environment variables in dev and production. BOT_TOKEN is required and is the secret key provided by the Discord developer panel for your bot application. The MARKETSTACK_TOKEN is a [marketstack.com](https://marketstack.com/) API token and must be provided for the `noyesbot stock` command to work.
+Secrets are passed into the program through environment variables in dev and production. BOT_TOKEN is required and is the secret key provided by the Discord developer panel for your bot application. The MARKETSTACK_TOKEN is a [marketstack.com](https://marketstack.com/) API token and must be provided for the `seanbot stock` command to work.
 
 Note: if you are a contributor to this Github repo and you are using Github Codespaces, that environment is configured with tokens for both of these. The BOT_TOKEN maps to an account running on a test server. Please reach out to Andrew for an invite.
 

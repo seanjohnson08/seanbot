@@ -8,7 +8,7 @@ const { env } = require('node:process');
  * @param {string} botName - The name of the bot to check for.
  * @returns {string} Is the message a command for the bot?
  */
-function isBotCommand(messageContent, botName = 'noyesbot') {
+function isBotCommand(messageContent, botName = 'seanbot') {
   return messageContent.startsWith(botName + ' ');
 }
 exports.isBotCommand = isBotCommand;

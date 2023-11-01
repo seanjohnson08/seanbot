@@ -1,5 +1,5 @@
 {
-  "name": "noyesbot",
+  "name": "seanbot",
   "version": "0.0.1",
   "description": "A Discord bot",
   "main": "src/index.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/noyesa/noyesbot.git"
+    "url": "git+https://github.com/noyesa/seanbot.git"
   },
   "keywords": [
     "discord",
@@ -21,9 +21,9 @@
   "author": "Andrew Noyes (noyesa@gmail.com)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/noyesa/noyesbot/issues"
+    "url": "https://github.com/noyesa/seanbot/issues"
   },
-  "homepage": "https://github.com/noyesa/noyesbot#readme",
+  "homepage": "https://github.com/noyesa/seanbot#readme",
   "devDependencies": {
     "dotenv": "^16.3.1",
     "husky": "^8.0.3",
