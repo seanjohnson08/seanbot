@@ -97,7 +97,7 @@ async function triviaInteractions(interaction) {
   switch (status) {
     case 'correct':
       await interaction.update({
-        content: `Correct! The answer to "${questionData.question}" is indeed "${questionData.correct_answer}. This was a ${questionData.difficulty} question."`,
+        content: `Correct! The answer to "${questionData.question}" is indeed "${questionData.correct_answer}". This was a ${questionData.difficulty} question."`,
         components: [],
       });
       // Update score
