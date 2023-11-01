@@ -3,7 +3,13 @@ const {
   ButtonBuilder,
   ButtonStyle,
   ButtonInteraction,
+  MessageReplyOptions,
 } = require('discord.js');
+
+const questionStore = new Map();
+
+/** @type Map<string, number> */
+const leaderBoard = new Map([['Sean', 1000]]);
 
 function fisherYatesShuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -15,8 +21,20 @@ function fisherYatesShuffle(array) {
   return array;
 }
 
-/** @returns {import('discord.js').MessageReplyOptions} */
-async function triviaCommand() {
+let uuid = 0;
+
+/** @returns {MessageReplyOptions} */
+async function triviaCommand(args) {
+  if (args[0] === 'leaderboard') {
+    const winners = [...leaderBoard.entries()].sort(
+      ([_aName, _aScore], [_bName, _bScore]) => _bScore - _aScore,
+    );
+    return (
+      "Today's top 5 players:\n" +
+      winners.map(([name, score]) => `${name}: ${score}`).join('\n')
+    );
+  }
+
   const triviaResponse = await fetch(
     'https://opentdb.com/api.php?amount=1&encode=url3986',
   );
@@ -34,26 +52,36 @@ async function triviaCommand() {
   const triviaAPIResponse = await triviaResponse.json();
   const triviaQuestion = triviaAPIResponse.results[0];
 
+  // OpenTDB encodes all of the properties. I chose URL instead of HTML encoding because it's easier to decode.
+  triviaQuestion.question = decodeURIComponent(triviaQuestion.question);
+  triviaQuestion.correct_answer = decodeURIComponent(
+    triviaQuestion.correct_answer,
+  );
+  triviaQuestion.incorrect_answers =
+    triviaQuestion.incorrect_answers.map(decodeURIComponent);
+
+  uuid++;
+  questionStore.set(`trivia|${uuid}`, triviaQuestion);
+
   const answerButtons = fisherYatesShuffle([
     triviaQuestion.correct_answer,
     ...triviaQuestion.incorrect_answers,
-  ])
-    .map((answer, i) => {
-      return new ButtonBuilder()
-        .setLabel(decodeURIComponent(answer))
-        .setCustomId(
-          answer === triviaQuestion.correct_answer
-            ? 'correct'
-            : `incorrect-${i}|${triviaQuestion.correct_answer}`,
-        )
-        .setStyle(ButtonStyle.Primary);
-    });
+  ]).map((answer, i) => {
+    return new ButtonBuilder()
+      .setLabel(answer)
+      .setCustomId(
+        answer === triviaQuestion.correct_answer
+          ? `correct|${uuid}`
+          : `incorrect|${uuid}|${i}`,
+      )
+      .setStyle(ButtonStyle.Primary);
+  });
 
   const row = new ActionRowBuilder().addComponents(...answerButtons);
 
-  /** @type {import('discord.js').MessageReplyOptions} */
+  /** @type {MessageReplyOptions} */
   const reply = {
-    content: decodeURIComponent(triviaQuestion.question),
+    content: triviaQuestion.question,
     components: [row],
   };
 
@@ -62,22 +90,29 @@ async function triviaCommand() {
 
 /** @param {ButtonInteraction} interaction */
 async function triviaInteractions(interaction) {
-  switch (interaction.customId) {
+  const parts = interaction.customId.split('|');
+  const status = parts[0];
+  const messageId = parseInt(parts[1]);
+  const questionData = questionStore.get(`trivia|${messageId}`);
+  switch (status) {
     case 'correct':
       await interaction.update({
-        content: 'Correct!',
+        content: `Correct! The answer to "${questionData.question}" is indeed "${questionData.correct_answer}. This was a ${questionData.difficulty} question."`,
         components: [],
       });
+      // Update score
+      const username = interaction.user.username;
+      leaderBoard.set(username, (leaderBoard.get(username) ?? 0) + 1);
       break;
     default:
       await interaction.update({
-        content: `Wrong answer! Correct answer: ${decodeURIComponent(
-          interaction.customId.split('|')[1],
-        )}`,
+        content: `Bzzzt! The answer to "${questionData.question}" is actually "${questionData.correct_answer}". This was a ${questionData.difficulty} question.`,
         components: [],
       });
       break;
   }
+  // clean up
+  questionStore.delete(`trivia|${messageId}`);
 }
 
 module.exports = { triviaCommand, triviaInteractions };
