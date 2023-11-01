@@ -9,7 +9,7 @@ const {
 const questionStore = new Map();
 
 /** @type Map<string, number> */
-const leaderBoard = new Map([['Sean', 1000]]);
+const leaderBoard = new Map();
 
 function fisherYatesShuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
