@@ -8,7 +8,7 @@
     "prettier": "npx prettier ./ --write",
     "precommit": "npx lint-staged",
     "prepare": "husky install .husky",
-    "start": "node src/index.js"
+    "start": "node -r dotenv/config src/index.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/noyesa/noyesbot#readme",
   "devDependencies": {
+    "dotenv": "^16.3.1",
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
     "prettier": "^3.0.3"
