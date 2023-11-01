@@ -7,7 +7,7 @@ const asyncCommand = require('./async');
 const { triviaCommand, triviaInteractions } = require('./trivia');
 const rollCommand = require('./roll');
 const { syncCommand } = require('../util');
-const { Message } = require('discord.js');
+const { Message, ComponentType } = require('discord.js');
 
 /**
  * Returns a list of the names of available commands.
@@ -58,6 +58,7 @@ async function dispatchCommand(message, commandName, args) {
   const response = await message.reply(await command(args));
   if (interactiveCommands.has(commandName)) {
     const interaction = await response.awaitMessageComponent({
+      componentType: ComponentType.Button,
       time: 60_000,
     });
 
