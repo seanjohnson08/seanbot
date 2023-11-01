@@ -30,7 +30,7 @@ async function triviaCommand(args) {
       ([_aName, _aScore], [_bName, _bScore]) => _bScore - _aScore,
     );
     return (
-      "Today's top 5 players:\n" +
+      "Today's top players:\n" +
       winners.map(([name, score]) => `${name}: ${score}`).join('\n')
     );
   }
